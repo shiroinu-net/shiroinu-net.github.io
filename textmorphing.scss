@@ -1,6 +1,4 @@
-@use "sass:math"; // sass:mathモジュールを読み込みます
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
 
 *, *::before, *::after {
   padding: 0;
@@ -9,35 +7,43 @@
 }
 
 body {
-  font-family: 'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
 }
 
-$speed: 20s;
-$wordCount: 9; // HTML内の .word の数に合わせてください (textmorphing_1.html では8個なので、8にするのが適切かもしれません)
+$speed: 30s; 
+$wordCount: 8;
 
 .morphing {
   position: relative;
-  font-size: 120px;
-  background-color: #ffffff;
-  color: #8a8a8a;
+  font-size: 100px;
+  background-color: #000;
+  color: #fff;
   min-height: 100vh;
   filter: contrast(25) blur(1px);
-}
 
-.word {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  animation: word $speed infinite ease-in-out;
+  .initial-content {
+    .word {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: inherit;
+      opacity: 0;                     // 初期は非表示
+      animation: word $speed infinite ease-in-out;
 
-  @for $i from 0 to $wordCount {
-    &:nth-child(#{$i + 1}) {
-      animation-delay: (math.div($speed, $wordCount + 1) * $i) - $speed;
+      // 各ワードのループ開始タイミングを負のディレイでオフセット
+      @for $i from 0 through ($wordCount - 1) {
+        &:nth-child(#{$i + 1}) {
+          // math.div の代わりに / を使用
+          animation-delay: ($speed / $wordCount) * $i - $speed;
+        }
+      }
     }
   }
+}
 
-  @keyframes word {
-    0%, 5%, 100% { filter: blur(0px); opacity: 1; }
-    20%, 80% { filter: blur(1em); opacity: 0; }
-  }
+@keyframes word {
+  0%, 5%, 100%  { filter: blur(0); opacity: 1; }
+  20%, 80%      { filter: blur(1em); opacity: 0; }
 }
