@@ -9,10 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
   
       if (nameEl) {
         let txt = '';
-        if (h >= 15 && h < 16)         txt = '名古屋Orchest-Lab';
-        else if (h >= 16 && h < 17)    txt = '化ける身';
-        else if (h >= 17 && h < 18)    txt = 'Rishao';
-        else if (h === 18 && m < 15)   txt = 'the MusicVideo';
+        if (h === 15 && m < 50) {
+            txt = '名古屋Orchest-Lab';
+        } else if ((h === 15 && m >= 50) || (h === 16 && m < 40)) {
+            txt = '化ける身';
+        } else if ((h === 16 && m >= 40) || (h === 17 && m < 50)) {
+            txt = 'Rishao';
+        } else if ((h === 17 && m >= 50) || (h === 18 && m < 15)) {
+            txt = 'the MusicVideo';
+        }
         else if (h > 18 || (h === 18 && m >= 15)) txt = 'thank you';
         if (nameEl.textContent !== txt) nameEl.textContent = txt;
       }
